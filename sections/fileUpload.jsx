@@ -1,79 +1,101 @@
 import React, { useState, useRef } from 'react';
 import './uploadfile.css';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import MultiSelectDropdown from './select';
+import About from './About'
+import axios from 'axios'
 
-const FileUploadBox = () => {
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [uploadProgress, setUploadProgress] = useState(0);
-  const [isUploading, setIsUploading] = useState(false);
-  const fileInputRef = useRef(null);
 
-  const handleFileSelect = (event) => {
-    const file = event.target.files[0];
-    setSelectedFile(file);
-  };
 
-  const handleFileDrop = (event) => {
-    event.preventDefault();
-    const file = event.dataTransfer.files[0];
-    setSelectedFile(file);
-    startUpload();
-  };
+function FileUploadBox() {
+const [city, setCity] = useState('')
+const [startDate, setStartDate] = useState('')
+const [indicator, setIndicator] = useState([])
+const childRef = useRef();
 
-  const handleDragOver = (event) => {
-    event.preventDefault();
-  };
+const updateIndicators = (selectedValues) => {
+  setIndicator(selectedValues);
+};
 
-  const startUpload = () => {
-    setIsUploading(true);
-  
-    const totalDuration = 8000; // Total duration for the fake upload in milliseconds
-    const intervalDuration = 200; // Interval duration for updating progress (e.g., every 100ms)
-    const steps = totalDuration / intervalDuration;
-    let stepCount = 0;
-  
-    const interval = setInterval(() => {
-      setUploadProgress((prevProgress) => {
-        stepCount += 1;
-        if (stepCount >= steps) {
-          setIsUploading(false);
-          return 100; // Ensure progress reaches 100% even if steps aren't exact
-        }
-        return (stepCount / steps) * 100;
-      });
-    }, intervalDuration);
-  };
+const handleSubmit = (e) => {
+  e.preventDefault()
+  const params = { city, startDate, indicator }
+  const county = 'http://127.0.0.1:5000/county-select/' + params.city
+  const selectedValues = indicator.map(item => item.value);
+  console.log('Selected Indicators:', selectedValues);
+  const indicatorsString = selectedValues.join(', ');
+  console.log(params.city + params.startDate + " " + indicatorsString)
+  axios
+    .post(county, params.city)
+    .then((res) => {
+      alert(res.data.result)
+      //reset()
+    })
+    .catch((error) => alert(`Error: ${error.message}`))
+}
+
+
+const reset = () => {
+  setCity('')
+  setStartDate('')
+  setIndicator([])
+  if (childRef.current && childRef.current.reset) {
+    childRef.current.reset();
+  }
+}
 
   return (
     <div className="wrapper">
-      <header>Upload Lecture MP4</header>
-      <div className="file-drop-area" onDrop={handleFileDrop} onDragOver={handleDragOver}>
-        <input
-          className="file-input"
-          type="file"
-          name="file"
-          hidden
-          ref={fileInputRef}
-          onChange={handleFileSelect}
+      <form onSubmit={(e) => handleSubmit(e)}>
+      <header>Price Prediction</header>
+        <div className="glass__form__group">
+          <select
+            id="City"
+            className="glass__form__input"
+            placeholder="Select City"
+            required
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+            style={{ color: 'white', fontWeight: 'bold' }}
+          >
+            <option value="">Select County</option>
+            <option value="Fulton">Fulton</option>
+            <option value="DeKalb">DeKalb</option>
+            <option value="Forsyth">Forsyth</option>
+            <option value="Gwinnett">Gwinnett</option>
+            <option value="Cobb">Cobb</option>
+          </select>
+        </div>
+        <div className="glass__form__group">
+        <label htmlFor="startDatePicker"></label>
+
+        <DatePicker
+        id="startDatePicker"
+        selected={startDate}
+        className = "glass__form__date"
+        required
+        onChange={e => setStartDate(e)}
+        placeholderText="Select a Date"
         />
-        <i className="fas fa-cloud-upload-alt"></i>
-        <p>Drag and drop a file or click to browse</p>
-        {selectedFile && <p>Selected file: {selectedFile.name}</p>}
+        </div>
+
+        <div className="glass__form__group">
+      <MultiSelectDropdown ref={childRef} onChange={updateIndicators} />
       </div>
-      {isUploading && (
-        <section className="progress-area">
-          <div className="row">
-            <i className="fas fa-file-alt"></i>
-            <div className="content">
-              <div className="details">
-                <span className="name">{selectedFile.name} • Uploading</span>
-                <span className="percent">{uploadProgress}%</span>
-              </div>
-              <div className="loading-bar" style={{ width: `${uploadProgress}%` }}></div>
-            </div>
-          </div>
-        </section>
-      )}
-      <section className="uploaded-area"></section>
+
+          <div className="glass__form__group">
+        <button type="submit" className="glass__form__btn" >
+          Submit
+        </button>
+      </div>
+    </form>
+
+    <div className="button-container">
+      <button type="reset" className="glass__form__reset" onClick={reset}>
+        Reset
+      </button>
+      </div>
     </div>
   );
 };

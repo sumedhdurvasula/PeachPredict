@@ -3,6 +3,100 @@
     color: #fff;
     background: #6990F2;
   }
+
+  
+  .glass__form h4 {
+    font-family: sans-serif;
+    text-align: center;
+    margin: 10px;
+  }
+  
+.glass__form {
+    position: relative;
+    display: grid;
+  }
+  
+  .glass__form h4 {
+    font-family: sans-serif;
+    text-align: center;
+    margin: 10px;
+  }
+  .glass__form__date::placeholder {
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+  }
+
+  
+  .glass__form__group {
+    margin: 10px 0;
+  }
+  
+  .glass__form__input {
+    width: 100%;
+    background: transparent;
+    outline: none;
+    border: none;
+    padding: 10px;
+    border-radius: 3px;
+    box-shadow: 5px 5px 5px rgb(0 0 0 / 10%);
+  }
+
+  .glass__form__date {
+    width: 206%;
+    background: transparent;
+    outline: none;
+    border: none;
+    padding: 10px;
+    border-radius: 3px;
+    padding-right: 2px;
+    box-shadow: 5px 5px 5px rgb(0 0 0 / 10%);
+    color: rgb(255, 255, 255);
+  }
+
+  
+  .glass__form__input:focus {
+    background: rgba(255, 255, 255, 0.5);
+  }
+  
+  .glass__form__btn {
+    background: #1c9795;
+    border: 1px solid #ea2828;
+    border: none;
+    outline: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: -54px; /* Adjust the margin as needed */
+  }
+
+  .glass__form__reset:hover {
+    background: transparent;
+    color: #1c9795;
+    transition: all ease-in-out 0.4s;
+  }
+
+  .glass__form__reset {
+    background: #1c9795;
+    border: 1px solid #ea2828;
+    border: none;
+    outline: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  .glass__form__btn:hover {
+    background: transparent;
+    color: #1c9795;
+    transition: all ease-in-out 0.4s;
+  }
   
   .wrapper {
     width: 430px;
@@ -14,46 +108,10 @@
   
   .wrapper header {
     font-family: "Eudoxus Sans", sans-serif;
-    color: #6990F2;
+    color: #2895ad;
     font-size: 27px;
     font-weight: 600;
     text-align: center;
-  }
-
-  .file-drop-area {
-    height: 167px;
-    display: flex;
-    cursor: pointer;
-    margin: 30px 0;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    border-radius: 5px;
-    border: 2px dashed #6990F2;
-  }
-  
-  .file-drop-area p {
-    margin-top: 15px;
-    font-size: 16px;
-    color: #6990F2; /* Adjust color to match your design */
-  }
-  
-  .file-drop-area i {
-    font-size: 50px;
-    color: #6990F2; /* Adjust color to match your design */
-  }
-  
-  
-  .wrapper form {
-    height: 167px;
-    display: flex;
-    cursor: pointer;
-    margin: 30px 0;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    border-radius: 5px;
-    border: 2px dashed #6990F2;
   }
   
   form :where(i, p) {

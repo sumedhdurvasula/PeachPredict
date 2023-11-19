@@ -22,8 +22,7 @@ const Hero = () => (
           variants={textVariant(1.2)}
           className="flex flex-row justify-center items-center "
         >
-          <h1 className={styles.heroHeading}>Reflect</h1>
-          <div className={styles.heroHeadingTwo}>Ed </div>
+          <h1 className={styles.heroHeading}>Housing App</h1>
 
           
           
@@ -34,15 +33,7 @@ const Hero = () => (
         variants={slideIn('right', 'tween', 0.2, 1)}
         className="relative w-full md:-mt-[20px] -mt-[12px]"
       >
-        <div className="absolute w-full h-[300px] hero-gradient rounded-tl-[140px] z-[0] -top-[30px]" />
-        <a href="#Dropbox">
-        <button>
-          <img src={"cover1.jpg"} 
-          alt="water_ripple"
-          className="w-[5000px] sm:h-[500px] h-[350px] object-cover rounded-tl-[140px] z-10 relative"
-          />
-          </button>
-        </a>
+
   
         <a href="#explore">
           <div className="w-full flex justify-end sm:-mt-[70px] -mt-[50px] pr-[40px] relative z-10">

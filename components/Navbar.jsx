@@ -16,16 +16,6 @@ const Navbar = () => (
    gradient-03"
     />
     <div className={`${styles.innerWidth} mx-auto flex justify-between gap-8`}>
-      <img
-        src="/vrpano.svg"
-        alt="pictures"
-        className="w-[24px] h-[24px] object-contain"
-      />
-      <img
-        src="/menu.svg"
-        alt="menu"
-        className="w-[24px] h-[24px] object-contain"
-      />
     </div>
   </motion.nav>
 );
