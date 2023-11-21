@@ -8,6 +8,7 @@ import { fadeIn, staggerContainer } from '../utils/motion';
 import FileUploadBox from './fileUpload';
 import { slideIn, textVariant } from '../utils/motion';
 import { useRef } from 'react';
+import React, { useState } from 'react';
 
 export const planetVariants = (direction) => ({
   hidden: { opacity: 0, x: 100 }, // Initial state, hidden and moved 100px to the right
@@ -15,14 +16,28 @@ export const planetVariants = (direction) => ({
 });
 
 
-const About = () => (
+const About = () => {
+
+  const [receivedData, setReceivedData] = useState('');
+
+  const handleDataReady = (data) => {
+    console.log('Data from FileUploadBox:', data);
+    setReceivedData(data);
+  };
+
+  return(
   <section className={`${styles.paddings} relative z-10`}>
     <div className="gradient-02 z-0" />
   <section className={`${styles.flexCenter} sm:pl-16 pl-6`} id="Dropbox">
     
-    <FileUploadBox />
+    <FileUploadBox onDataReady={handleDataReady}/>
 
     </section>
+    {receivedData && (
+      <div className={`${styles.flexCenter} mt-4 text-white`}>
+        <p>{`Received Data: ${receivedData}`}</p>
+      </div>
+    )}
     <div style={{ marginTop: '110px' }}></div>
     <motion.div
       variants={staggerContainer}
@@ -46,6 +61,7 @@ const About = () => (
       <div><img src="big_house.png" alt="Description" /></div>
     </motion.div>
   </section>
-);
+  );
+  };
 
 export default About;

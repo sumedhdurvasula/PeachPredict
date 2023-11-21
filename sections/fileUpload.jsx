@@ -7,32 +7,42 @@ import About from './About'
 import axios from 'axios'
 
 
-
-function FileUploadBox() {
+function FileUploadBox({ onDataReady }) {
 const [city, setCity] = useState('')
 const [startDate, setStartDate] = useState('')
 const [indicator, setIndicator] = useState([])
 const childRef = useRef();
+const [prediction, setPrediction] = useState(null);
 
 const updateIndicators = (selectedValues) => {
   setIndicator(selectedValues);
 };
 
-const handleSubmit = (e) => {
+const handleSubmit = async (e) => {
   e.preventDefault()
   const params = { city, startDate, indicator }
-  const county = 'http://127.0.0.1:5000/county-select/' + params.city
+  const countyUrl = 'http://127.0.0.1:5000/county-select/' + params.city
   const selectedValues = indicator.map(item => item.value);
   console.log('Selected Indicators:', selectedValues);
   const indicatorsString = selectedValues.join(', ');
   console.log(params.city + params.startDate + " " + indicatorsString)
-  axios
-    .post(county, params.city)
-    .then((res) => {
-      alert(res.data.result)
-      //reset()
-    })
-    .catch((error) => alert(`Error: ${error.message}`))
+  try {
+    // Use FormData to send parameters as part of the request
+    const formData = new FormData();
+    formData.append('city', params.city);
+    formData.append('startDate', params.startDate);
+    formData.append('indicators', indicatorsString);
+
+    const response = await axios.post(countyUrl, formData, {
+      responseType: 'arraybuffer', // Tell Axios to expect binary data
+    });
+
+    // Convert the received binary data to a data URL
+    const imageUrl = `data:image/png;base64,${Buffer.from(response.data, 'binary').toString('base64')}`;
+    setPrediction(imageUrl);
+  } catch (error) {
+    alert(`Error: ${error.message}`);
+  }
 }
 
 
@@ -43,7 +53,13 @@ const reset = () => {
   if (childRef.current && childRef.current.reset) {
     childRef.current.reset();
   }
+  setPrediction(null)
 }
+      //const newPrediction = res.data.result;
+      //console.log(newPrediction); // Logs the received data
+      //setPrediction(newPrediction); // Asynchronous state update
+      //onDataReady(newPrediction);
+      //reset()
 
   return (
     <div className="wrapper">
@@ -96,6 +112,9 @@ const reset = () => {
         Reset
       </button>
       </div>
+    <div>
+      {prediction && <img src={prediction} alt="Generated Graph" />}
+    </div>
     </div>
   );
 };
