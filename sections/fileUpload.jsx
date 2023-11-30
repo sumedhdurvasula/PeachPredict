@@ -9,7 +9,7 @@ import axios from 'axios'
 
 function FileUploadBox({ onDataReady }) {
 const [city, setCity] = useState('')
-const [startDate, setStartDate] = useState('')
+//const [startDate, setStartDate] = useState('')
 const [indicator, setIndicator] = useState([])
 const childRef = useRef();
 const [prediction, setPrediction] = useState(null);
@@ -20,17 +20,16 @@ const updateIndicators = (selectedValues) => {
 
 const handleSubmit = async (e) => {
   e.preventDefault()
-  const params = { city, startDate, indicator }
+  const params = { city, indicator }
   const countyUrl = 'http://127.0.0.1:5000/county-select/' + params.city
   const selectedValues = indicator.map(item => item.value);
   console.log('Selected Indicators:', selectedValues);
   const indicatorsString = selectedValues.join(', ');
-  console.log(params.city + params.startDate + " " + indicatorsString)
+  console.log(params.city + " " + indicatorsString)
   try {
     // Use FormData to send parameters as part of the request
     const formData = new FormData();
     formData.append('city', params.city);
-    formData.append('startDate', params.startDate);
     formData.append('indicators', indicatorsString);
 
     const response = await axios.post(countyUrl, formData, {
@@ -48,7 +47,6 @@ const handleSubmit = async (e) => {
 
 const reset = () => {
   setCity('')
-  setStartDate('')
   setIndicator([])
   if (childRef.current && childRef.current.reset) {
     childRef.current.reset();
@@ -76,28 +74,56 @@ const reset = () => {
             style={{ color: 'white', fontWeight: 'bold' }}
           >
             <option value="">Select County</option>
-            <option value="Fulton">Fulton</option>
-            <option value="DeKalb">DeKalb</option>
-            <option value="Forsyth">Forsyth</option>
-            <option value="Gwinnett">Gwinnett</option>
+            <option value="Barrow">Barrow</option>
+            <option value="Bartow">Bartow</option>
+            <option value="Bibb">Bibb</option>
+            <option value="Bulloch">Bulloch</option>
+            <option value="Calhoun">Calhoun</option>
+            <option value="Camden">Camden</option>
+            <option value="Carroll">Carroll</option>
+            <option value="Catoosa">Catoosa</option>
+            <option value="Chatham">Chatham</option>
+            <option value="Cherokee">Cherokee</option>
+            <option value="Clarke">Clarke</option>
+            <option value="Clayton">Clayton</option>
             <option value="Cobb">Cobb</option>
+            <option value="Columbia">Columbia</option>
+            <option value="Coweta">Coweta</option>
+            <option value="DeKalb">DeKalb</option>
+            <option value="Dougherty">Dougherty</option>
+            <option value="Douglas">Douglas</option>
+            <option value="Effingham">Effingham</option>
+            <option value="Fayette">Fayette</option>
+            <option value="Floyd">Floyd</option>
+            <option value="Forsyth">Forsyth</option>
+            <option value="Fulton">Fulton</option>
+            <option value="Glynn">Glynn</option>
+            <option value="Gordon">Gordon</option>
+            <option value="Gwinnett">Gwinnett</option>
+            <option value="Hall">Hall</option>
+            <option value="Henry">Henry</option>
+            <option value="Houston">Houston</option>
+            <option value="Jackson">Jackson</option>
+            <option value="Jefferson">Jefferson</option>
+            <option value="Laurens">Laurens</option>
+            <option value="Liberty">Liberty</option>
+            <option value="Lowndes">Lowndes</option>
+            <option value="Macon">Macon</option>
+            <option value="Muscogee">Muscogee</option>
+            <option value="Newton">Newton</option>
+            <option value="Paulding">Paulding</option>
+            <option value="Richmond">Richmond</option>
+            <option value="Rockdale">Rockdale</option>
+            <option value="Spalding">Spalding</option>
+            <option value="Troup">Troup</option>
+            <option value="Walker">Walker</option>
+            <option value="Walton">Walton</option>
+            <option value="Whitfield">Whitfield</option>
           </select>
         </div>
-        <div className="glass__form__group">
-        <label htmlFor="startDatePicker"></label>
-
-        <DatePicker
-        id="startDatePicker"
-        selected={startDate}
-        className = "glass__form__date"
-        required
-        onChange={e => setStartDate(e)}
-        placeholderText="Select a Date"
-        />
-        </div>
 
         <div className="glass__form__group">
-      <MultiSelectDropdown ref={childRef} onChange={updateIndicators} />
+        {city && <MultiSelectDropdown ref={childRef} onChange={updateIndicators} />}
       </div>
 
           <div className="glass__form__group">
