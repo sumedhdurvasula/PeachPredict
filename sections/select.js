@@ -6,7 +6,10 @@ const options = [
   { value: 'Income', label: 'Income' },
   { value: 'Interest Rates', label: 'Interest Rates' },
   { value: 'Home Sales', label: 'Home Sales' },
-  { value: 'Home Building', label: 'Home Building' }
+  { value: 'Home Building', label: 'Home Building' },
+  { value: 'Market Hotness', label: 'Market Hotness' },
+  { value: 'Housing Inventory', label: 'Housing Inventory' },
+  { value: 'Employed Persons', label: 'Employed Persons' }
 ];
 
 const MultiSelectDropdown = forwardRef(({ onChange }, ref) => {

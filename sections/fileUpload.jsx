@@ -9,28 +9,51 @@ import axios from 'axios'
 
 function FileUploadBox({ onDataReady }) {
 const [city, setCity] = useState('')
+const [time, setTime] = useState('')
 //const [startDate, setStartDate] = useState('')
 const [indicator, setIndicator] = useState([])
 const childRef = useRef();
 const [prediction, setPrediction] = useState(null);
+const [loading, setLoading] = useState(false);
 
 const updateIndicators = (selectedValues) => {
   setIndicator(selectedValues);
 };
 
+const openImageInNewTab = () => {
+  if (prediction) {
+    const newTab = window.open();
+    newTab.document.write(`
+      <html>
+        <head>
+          <title>Generated Graph</title>
+          <style>
+            body {
+              background-color: #242839;
+            }
+          </style>
+        </head>
+        <body>
+          <img src="${prediction}" alt="Generated Graph">
+        </body>
+      </html>
+    `);
+  }
+};
+
 const handleSubmit = async (e) => {
   e.preventDefault()
-  const params = { city, indicator }
+  setLoading(true);
+  const params = { city, indicator, time }
   const countyUrl = 'http://127.0.0.1:5000/county-select/' + params.city
   const selectedValues = indicator.map(item => item.value);
-  console.log('Selected Indicators:', selectedValues);
   const indicatorsString = selectedValues.join(', ');
-  console.log(params.city + " " + indicatorsString)
   try {
     // Use FormData to send parameters as part of the request
     const formData = new FormData();
     formData.append('city', params.city);
     formData.append('indicators', indicatorsString);
+    formData.append('time', params.time)
 
     const response = await axios.post(countyUrl, formData, {
       responseType: 'arraybuffer', // Tell Axios to expect binary data
@@ -41,13 +64,27 @@ const handleSubmit = async (e) => {
     setPrediction(imageUrl);
   } catch (error) {
     alert(`Error: ${error.message}`);
+  } finally {
+    // Set loading back to false after the request is completed
+    setLoading(false);
   }
 }
+
+const generateOptions = () => {
+  const options = [<option key="" value="">Select time range (months)</option>];
+
+  for (let i = 3; i <= 36; i += 3) {
+    options.push(<option key={i} value={i}>{i}</option>);
+  }
+
+  return options;
+};
 
 
 const reset = () => {
   setCity('')
   setIndicator([])
+  setTime('')
   if (childRef.current && childRef.current.reset) {
     childRef.current.reset();
   }
@@ -81,7 +118,6 @@ const reset = () => {
             <option value="Calhoun">Calhoun</option>
             <option value="Camden">Camden</option>
             <option value="Carroll">Carroll</option>
-            <option value="Catoosa">Catoosa</option>
             <option value="Chatham">Chatham</option>
             <option value="Cherokee">Cherokee</option>
             <option value="Clarke">Clarke</option>
@@ -95,7 +131,6 @@ const reset = () => {
             <option value="Effingham">Effingham</option>
             <option value="Fayette">Fayette</option>
             <option value="Floyd">Floyd</option>
-            <option value="Forsyth">Forsyth</option>
             <option value="Fulton">Fulton</option>
             <option value="Glynn">Glynn</option>
             <option value="Gordon">Gordon</option>
@@ -105,7 +140,6 @@ const reset = () => {
             <option value="Houston">Houston</option>
             <option value="Jackson">Jackson</option>
             <option value="Jefferson">Jefferson</option>
-            <option value="Laurens">Laurens</option>
             <option value="Liberty">Liberty</option>
             <option value="Lowndes">Lowndes</option>
             <option value="Macon">Macon</option>
@@ -126,6 +160,23 @@ const reset = () => {
         {city && <MultiSelectDropdown ref={childRef} onChange={updateIndicators} />}
       </div>
 
+      <div className="glass__form__group">
+      {city && (
+        <select
+          id="City"
+          className="glass__form__input"
+          placeholder="Select time range (months)"
+          required
+          value={time}
+          onChange={(e) => setTime(e.target.value)}
+          style={{ color: 'white', fontWeight: 'bold' }}
+        >
+          {generateOptions()}
+        </select>
+      )}
+    </div>
+
+
           <div className="glass__form__group">
         <button type="submit" className="glass__form__btn" >
           Submit
@@ -138,10 +189,29 @@ const reset = () => {
         Reset
       </button>
       </div>
-    <div>
-      {prediction && <img src={prediction} alt="Generated Graph" />}
+      <div>
+      {loading ? (
+        // Display the loading spinner
+        <div className="loader"></div>
+      ) : (
+        // Display the image when available
+        prediction && (
+          <div>
+            <img
+              src={prediction}
+              alt="Generated Graph"
+              onClick={openImageInNewTab}
+              style={{ cursor: 'pointer' }}
+              className="enlarge-on-hover"
+            />
+            <div style={{ color: 'white', fontWeight: 'bold', fontSize: '14px' }}>
+              Click on image to open in a new tab or hover to enlarge
+            </div>
+          </div>
+        )
+      )}
     </div>
-    </div>
+   </div>
   );
 };
 

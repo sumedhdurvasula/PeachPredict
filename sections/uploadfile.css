@@ -4,6 +4,19 @@
     background: #6990F2;
   }
 
+  .image-container {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .enlarge-on-hover {
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .enlarge-on-hover:hover {
+    transform: scale(3); /* You can adjust the scale factor as needed */
+  }
+
   
   .glass__form h4 {
     font-family: sans-serif;
@@ -51,6 +64,21 @@
     padding-right: 2px;
     box-shadow: 5px 5px 5px rgb(0 0 0 / 10%);
     color: rgb(255, 255, 255);
+  }
+
+  .loader {
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin: 50px auto;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
   }
 
   

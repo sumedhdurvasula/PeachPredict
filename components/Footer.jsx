@@ -33,7 +33,7 @@ const Footer = () => (
 
         <div className="flex items-center justify-between flex-wrap gap-4">
           <h4 className="font-extrabold text-[24px] text-white">
-            Housing App
+            Peach Predict
           </h4>
 
           <div className="flex gap-4">

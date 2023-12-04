@@ -46,13 +46,13 @@ const About = () => {
       viewport={{ once: false, amount: 0.25 }}
       className={`${styles.innerWidth} mx-auto ${styles.flexCenter} flex-col`}
     >
-      <TypingText title="What is Housing App" textStyles="text-center" />
+      <TypingText title="What is Peach Predict?" textStyles="text-center" />
 
       <motion.p
         variants={fadeIn('up', 'tween', 0.2, 1)}
         className="mt-[8px] font-normal sm:text-[32px] text-[20px] text-center text-secondary-white"
       >
-        <span className="font-extrabold text-white">Housing App</span>
+        <span className="font-extrabold text-white">Peach Predict</span>
 
         <span className="font-extrabold text-white"> is a revolutionary tool designed to empower homebuyers and real estate 
         enthusiasts with the capability to predict property prices in multiple locations on any given date. Leveraging the power of machine learning and 
