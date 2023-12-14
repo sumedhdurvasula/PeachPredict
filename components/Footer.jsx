@@ -19,13 +19,6 @@ const Footer = () => (
         <h4 className="font-bold md:text-[64px] text-[44px] text-white">
           Find Prices Reliably
         </h4>
-        <button type="button" className="flex items-center h-fit py-4 px-6 bg-[#25618B] rounded-[32px] gap-[12px]">
-          <img
-            src="/heart.svg"
-            alt="heart"
-            className="w-[24px] h-[12px] object-contain"
-          />
-        </button>
       </div>
 
       <div className="flex flex-col">

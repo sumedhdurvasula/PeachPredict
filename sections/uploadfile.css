@@ -1,7 +1,7 @@
 
   ::selection {
     color: #fff;
-    background: #6990F2;
+    background: #69f28e;
   }
 
   .image-container {
@@ -17,7 +17,6 @@
     transform: scale(3); /* You can adjust the scale factor as needed */
   }
 
-  
   .glass__form h4 {
     font-family: sans-serif;
     text-align: center;

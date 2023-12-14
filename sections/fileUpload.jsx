@@ -1,11 +1,9 @@
 import React, { useState, useRef } from 'react';
 import './uploadfile.css';
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import MultiSelectDropdown from './select';
 import About from './About'
 import axios from 'axios'
-
 
 function FileUploadBox({ onDataReady }) {
 const [city, setCity] = useState('')
@@ -45,7 +43,7 @@ const handleSubmit = async (e) => {
   e.preventDefault()
   setLoading(true);
   const params = { city, indicator, time }
-  const countyUrl = 'http://127.0.0.1:5000/county-select/' + params.city
+  const countyUrl = 'https://getsgraph-geftptehla-uk.a.run.app/county-select/' + params.city
   const selectedValues = indicator.map(item => item.value);
   const indicatorsString = selectedValues.join(', ');
   try {
@@ -63,7 +61,7 @@ const handleSubmit = async (e) => {
     const imageUrl = `data:image/png;base64,${Buffer.from(response.data, 'binary').toString('base64')}`;
     setPrediction(imageUrl);
   } catch (error) {
-    alert(`Error: ${error.message}`);
+    alert(`Error: Please Choose Another County`);
   } finally {
     // Set loading back to false after the request is completed
     setLoading(false);
