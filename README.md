@@ -2,12 +2,14 @@
 This innovative housing price predictor leverages advanced machine learning techniques. Users can input property information alongside macro-economic indicators to receive accurate estimations. By combining various data points, it provides a comprehensive understanding of housing values across all Georgia counties. The application also includes embedded data visualization tools for easy feature comparison, empowering users to make informed decisions confidently. Its unique approach includes nuanced insights through feature weighting, ensuring precise estimations without focusing on specific property details.
 
 
+# Link to PeachPredict 
 https://peach-predict.vercel.app/
 
+# More information
 https://sites.google.com/view/peach-predict/home?authuser=0
 
 
-## ETL Pipeline
+# ETL Pipeline
 ### Dependencies:
 #### Python Libraries:
 1. pandas (`$ conda install -c anaconda pandas`)
